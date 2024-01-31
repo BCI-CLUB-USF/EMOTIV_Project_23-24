@@ -1,2 +1,5 @@
 # EMOTIV_Project_23-24
-Repo for software project 🔫
+
+Importantt file in `unity emotiv demo`:
+- Assets/Plugins/AppConfig.cs
+- 
