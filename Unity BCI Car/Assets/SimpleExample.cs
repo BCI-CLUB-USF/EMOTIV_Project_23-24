@@ -8,8 +8,8 @@ public class SimpleExample : MonoBehaviour
 {
     
     // Please fill clientId and clientSecret of your application before starting
-    private string _clientId ="IgoNF2VyyqPkJ0nWqwir7slED8egiMs3H8RuznIo";
-    private string _clientSecret = "8nb3aqcFd0ZwUcLHNPI6JcUP3M2kIsuO8TIu0FscLXoZecmzKGvZ292ZPJmj68COg1PQhcXvugbrJ9pCRcDZy0x6h253rCb3t0J0x0OWj2Dmky6wgzXvQ0ImrnjtYVVH";
+    private string _clientId;
+    private string _clientSecret; 
     private string _appName = "UnityApp";
     private string _appVersion = "3.3.0";
 
@@ -43,6 +43,10 @@ public class SimpleExample : MonoBehaviour
     
     void Start()
     {
+        _clientId = EnvReader.GetVariable("CLIENT_ID");
+        print(_clientId);
+        _clientSecret= EnvReader.GetVariable("CLIENT_SECRET");
+        print(_clientSecret);
         // init EmotivUnityItf without data buffer using
         _eItf.Init(_clientId, _clientSecret, _appName, _appVersion, _isDataBufferUsing);
 
