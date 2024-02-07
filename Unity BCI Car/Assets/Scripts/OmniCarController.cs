@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using EmotivUnityPlugin;
 
 public class OmniCarController : MonoBehaviour
-{
+{  
+    EmotivUnityItf _eItf = EmotivUnityItf.Instance;
     public float speed = 20;
     public Vector3 _rotationSpeed = new Vector3 (0, 50, 0);
     public bool headset = false;
@@ -36,6 +37,16 @@ public class OmniCarController : MonoBehaviour
     }
 
     Vector3 headsetParser(){
-        return new Vector3(1,0,0);
+        if(_eItf != null)
+        {
+            if(_eItf.LatestMentalCommand.act != "NULL")
+            {
+                string current_command = _eItf.LatestMentalCommand.act;
+                if(current_command == "push"){
+                    return new Vector3(0,0,1);
+                }
+            }
+        }
+        return new Vector3(0,0,0);
     }
 }
