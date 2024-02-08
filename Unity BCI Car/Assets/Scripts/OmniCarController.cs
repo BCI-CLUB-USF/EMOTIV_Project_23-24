@@ -6,7 +6,7 @@ using EmotivUnityPlugin;
 public class OmniCarController : MonoBehaviour
 {  
     EmotivUnityItf _eItf = EmotivUnityItf.Instance;
-    public float speed = 20;
+    public float speed;
     public Vector3 _rotationSpeed = new Vector3 (0, 50, 0);
     public bool headset = false;
 
@@ -42,8 +42,16 @@ public class OmniCarController : MonoBehaviour
             if(_eItf.LatestMentalCommand.act != "NULL")
             {
                 string current_command = _eItf.LatestMentalCommand.act;
-                if(current_command == "push"){
-                    return new Vector3(0,0,1);
+                switch (current_command){
+                    case "push": return new Vector3(0,0,1);
+                    case "pull": return new Vector3(0,0,-1);
+                    case "left": return new Vector3(-1,0,0);
+                    case "right": return new Vector3(1,0,0);
+                    case "rotateRight": transform.Rotate(_rotationSpeed * Time.deltaTime);
+                                        break;
+                    case "rotateLeft": transform.Rotate(-_rotationSpeed * Time.deltaTime);
+                                        break;
+
                 }
             }
         }
