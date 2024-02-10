@@ -71,7 +71,7 @@ namespace EmotivUnityPlugin
                 UnityEngine.Debug.LogError("The clientId or clientSecret is empty. Please fill them before starting.");
                 return;
             }
-            _dsManager.SetAppConfig(clientId, clientSecret, appVersion, appName);
+            _dsManager.SetAppConfig(clientId, clientSecret, appVersion, appName, appName, "wss://localhost:6868");
             _dsManager.IsDataBufferUsing = isDataBufferUsing;
             // init bcitraining
             _bciTraining.Init();

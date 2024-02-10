@@ -10,7 +10,7 @@ public class SimpleExample : MonoBehaviour
     // Please fill clientId and clientSecret of your application before starting
     private string _clientId;
     private string _clientSecret; 
-    private string _appName = "UnityApp";
+    private string _appName = "Basic License";
     private string _appVersion = "3.3.0";
 
     EmotivUnityItf _eItf = EmotivUnityItf.Instance;
