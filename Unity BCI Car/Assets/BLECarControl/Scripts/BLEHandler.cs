@@ -18,6 +18,7 @@ public class BLEHandler : MonoBehaviour
     BLE ble;
     BLE.BLEScan scan;
     bool isScanning = false, isConnected = false;
+    bool scanFinished = false, connectionFinished = false;
     string deviceId = null;  
     IDictionary<string, string> discoveredDevices = new Dictionary<string, string>();
     int devicesCount = 0;
@@ -46,7 +47,7 @@ public class BLEHandler : MonoBehaviour
                 UpdateGuiText("scan");
                 devicesCount = discoveredDevices.Count;
             }
-        } else {
+        } else if (!scanFinished) {
             StartScanHandler();
         }
 
@@ -64,7 +65,7 @@ public class BLEHandler : MonoBehaviour
                 UpdateGuiText("connected");
                 isConnected = true;
             // Device was found, but not connected yet. 
-            } else if (!isConnected)
+            } else if (!connectionFinished && !isConnected)
             {
                 TextIsScanning.text = "Found target device: " + targetDeviceName;
                 StartConHandler();
@@ -106,6 +107,7 @@ public class BLEHandler : MonoBehaviour
         discoveredDevices.Clear();
         scanningThread = new Thread(ScanBleDevices);
         scanningThread.Start();
+        scanFinished = true;
         //TextIsScanning.color = new Color(244, 180, 26);
         //TextIsScanning.text = "Scanning...";
     }
@@ -170,7 +172,7 @@ public class BLEHandler : MonoBehaviour
 
         scan.Finished = () =>
         {
-            isScanning = false;
+            //isScanning = false;
             Debug.Log("scan finished");
             if (deviceId == null)
                 deviceId = "-1";
@@ -179,7 +181,7 @@ public class BLEHandler : MonoBehaviour
             Thread.Sleep(500);
         scan.Cancel();
         scanningThread = null;
-        isScanning = false;
+        //isScanning = false;
 
         if (deviceId == "-1")
         {
@@ -194,6 +196,7 @@ public class BLEHandler : MonoBehaviour
     {
         connectionThread = new Thread(ConnectBleDevice);
         connectionThread.Start();
+        connectionFinished = true;
     }
 
     void ConnectBleDevice()
