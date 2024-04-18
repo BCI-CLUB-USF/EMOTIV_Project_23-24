@@ -17,7 +17,7 @@ public class BLEHandler : MonoBehaviour
 
     BLE ble;
     BLE.BLEScan scan;
-    bool isScanning = false, isConnected = false;
+    public bool isScanning = false, isConnected = false;
     bool scanFinished = false, connectionFinished = false;
     string deviceId = null;  
     IDictionary<string, string> discoveredDevices = new Dictionary<string, string>();

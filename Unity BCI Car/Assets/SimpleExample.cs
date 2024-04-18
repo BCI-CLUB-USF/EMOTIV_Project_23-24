@@ -55,6 +55,10 @@ public class SimpleExample : MonoBehaviour
 
     }
 
+    public void test() {
+        Debug.Log("Button Pressed.");
+    }
+
     // Update is called once per frame
     void Update()
     {
