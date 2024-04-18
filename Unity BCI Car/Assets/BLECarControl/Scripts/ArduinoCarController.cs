@@ -34,10 +34,9 @@ public class ArduinoCarController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(headset)
-        {
-            headsetParser();
-        }
+        
+        headsetParser();
+        
 
         if (Input.GetKey(KeyCode.Escape))
         {

@@ -118,8 +118,8 @@ public class SimpleExample : MonoBehaviour
         Debug.Log("onCreateSessionBtnClick");
         if (!_eItf.IsSessionCreated)
         {
-            _eItf.CreateSessionWithHeadset("INSIGHT2-A3D2005C");
-            //_eItf.CreateSessionWithHeadset(HeadsetId.text);
+            // _eItf.CreateSessionWithHeadset("INSIGHT2-A3D2005C");
+            _eItf.CreateSessionWithHeadset(HeadsetId.text);
         }
         else
         {
