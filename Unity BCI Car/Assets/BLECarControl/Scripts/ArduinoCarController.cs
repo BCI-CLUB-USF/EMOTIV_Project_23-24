@@ -13,6 +13,7 @@ public class ArduinoCarController : MonoBehaviour
     public bool headset = false;
     private bool emergencyBreak = false;
     private bool uiToggle = true;
+    private int direction = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -34,10 +35,6 @@ public class ArduinoCarController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-        headsetParser();
-        
-
         if (Input.GetKey(KeyCode.Escape))
         {
             uiToggle = false;
@@ -46,9 +43,11 @@ public class ArduinoCarController : MonoBehaviour
         emergencyBreak = Input.GetKey(KeyCode.Space);
         if (emergencyBreak)
         {
-            SendBleSignal("0");
-            Debug.Log("EMERGENCY BREAK ACTIVATED!");
+            bluetooth.WriteToBleDevice("0");
+            return;
         }
+        
+        headsetParser();
         
         // Check for movement inputs and call corresponding methods on ScrollingGrid
         if (Input.GetKey(KeyCode.W) && !uiToggle)
@@ -89,7 +88,7 @@ public class ArduinoCarController : MonoBehaviour
 
         if (emergencyBreak)
         {
-            bluetooth.WriteToBleDevice("0");
+            Debug.Log("EMERGENCY BREAK ACTIVATED!");
             return;
         }
 
@@ -100,8 +99,11 @@ public class ArduinoCarController : MonoBehaviour
     {
         if (emergencyBreak)
         {
+            bluetooth.WriteToBleDevice("0");
             return;
         }
+
+        direction = 1;
 
         scrollingGrid.MoveForward();
         SendBleSignal("F");
@@ -111,8 +113,11 @@ public class ArduinoCarController : MonoBehaviour
     {
         if (emergencyBreak)
         {
+            bluetooth.WriteToBleDevice("0");
             return;
         }
+
+        direction = -1;
 
         scrollingGrid.MoveBackward();
         SendBleSignal("B");
@@ -122,6 +127,7 @@ public class ArduinoCarController : MonoBehaviour
     {
         if (emergencyBreak)
         {
+            bluetooth.WriteToBleDevice("0");
             return;
         }
         
@@ -133,6 +139,7 @@ public class ArduinoCarController : MonoBehaviour
     {
         if (emergencyBreak)
         {
+            bluetooth.WriteToBleDevice("0");
             return;
         }
         
@@ -144,10 +151,18 @@ public class ArduinoCarController : MonoBehaviour
     {
         if (emergencyBreak)
         {
+            bluetooth.WriteToBleDevice("0");
             return;
         }
+
+        if (direction == 1) {
+            scrollingGrid.MoveForward();
+            scrollingGrid.TurnLeft();
+        } else if (direction == -1) {
+            scrollingGrid.MoveBackward();
+            scrollingGrid.TurnRight();
+        }
         
-        scrollingGrid.TurnLeft();
         SendBleSignal("<");
     }
 
@@ -155,10 +170,18 @@ public class ArduinoCarController : MonoBehaviour
     {
         if (emergencyBreak)
         {
+            bluetooth.WriteToBleDevice("0");
             return;
         }
         
-        scrollingGrid.TurnRight();
+        if (direction == 1) {
+            scrollingGrid.MoveForward();
+            scrollingGrid.TurnRight();
+        } else if (direction == -1) {
+            scrollingGrid.MoveBackward();
+            scrollingGrid.TurnLeft();
+        }
+
         SendBleSignal(">");
     }
 
